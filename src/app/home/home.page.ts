@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 
 @Component({
@@ -6,7 +7,22 @@ import { Component } from '@angular/core';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
+  users = [];
+  constructor(private http: HttpClient) {
+    this.loadUsers();
+  }
 
-  constructor() {}
+  loadUsers() {
+    this.http.get('https://randomuser.me/api/?results=20&seed=simonics')
+      .subscribe((res: any) => {
+        this.users = res.results;
+        console.log(this.users);
+      });
+
+  }
+  selectChanged(event: any) {
+    console.log('CHANGED', event);
+
+  }
 
 }
